@@ -1,0 +1,20 @@
+.notfound__section {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   min-height: 90vh;
+}
+
+.notfound__section h1 {
+   font-size: 6rem;
+   font-weight: bold;
+   padding: 1rem 0;
+}
+
+/* Media query */
+@media (max-width: 567px) {
+   .notfound__section h1 {
+      font-size: 3rem;
+   }
+}
