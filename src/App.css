@@ -8,7 +8,23 @@
 
 :root {
   /* Color variation */
-  --color-body: #f2f2f2;
+  --color-body: #f9fff482;
+  --color-light: #f1f1f1;
+  --color-light-alt: #c9c9c9;
+  --color-dark: #212529;
+  --color-dark-alt: #15171a;
+  --color-primary: #02b290;
+  --color-primary-alt: #03d8c3;
+  --color-success: green;
+  --color-success-alt: #004e00;
+  --color-secondary: #765df8;
+  --color-secondary-alt: #8d3daf;
+  --color-sweet: #e6425e;
+  --color-sweet-alt: #da33b6;
+  --color-update: #8d3daf;
+  --color-update-alt: #8d3daf;
+  --color-red: #dc3545;
+  --color-red-alt: darkred;
 
   /* Font variation */
   --font-primary: "Poppins", sans-serif;
@@ -20,3 +36,10 @@ body {
 }
 
 /* Re-usable class list */
+
+/* reset */
+
+a,
+p {
+  font-size: 0.9rem;
+}

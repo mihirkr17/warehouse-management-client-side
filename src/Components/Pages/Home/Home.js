@@ -1,11 +1,15 @@
 import React from 'react';
+import Banner from './Banner/Banner';
 import './Home.css';
 
 const Home = () => {
    return (
-      <div className='home__section'>
-            This is HOme page
-      </div>
+      <section className='home__section py-3'>
+              <Banner></Banner>
+         <div className="container">
+       
+         </div>
+      </section>
    );
 };
 

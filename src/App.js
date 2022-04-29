@@ -5,18 +5,24 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './Components/Pages/Home/Home';
 import Blogs from './Components/Pages/Blogs/Blogs';
 import NotFound from './Components/Pages/NotFound/NotFound';
+import Footer from './Components/Shared/Footer';
 
 function App() {
   return (
     <React.Fragment>
+
       <NavigationBar></NavigationBar>
-      <div className="container">
+
+      <main>
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/blogs' element={<Blogs></Blogs>}></Route>
           <Route path='*' element={<NotFound></NotFound>}></Route>
         </Routes>
-      </div>
+      </main>
+
+      <Footer></Footer>
+
     </React.Fragment>
   );
 }
