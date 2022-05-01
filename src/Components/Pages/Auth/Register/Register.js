@@ -1,15 +1,59 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import google from '../../../../Assets/images/logos/google.png';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import auth from '../../../../firebase.init';
+import Social from '../Social/Social';
+import Spinner from '../../../Shared/Spinner';
 
 const Register = () => {
+   // navigate
+   const navigate = useNavigate();
+
+   // create user with email and password
+   const [
+      createUserWithEmailAndPassword,
+      user,
+      loading,
+      error,
+   ] = useCreateUserWithEmailAndPassword(auth);
+
+   // updating or setting user profile username
+   const [updateProfileData, updateErrMsg] = useUpdateProfile(auth);
+
+   // if register successful then redirect to login page
+   if (user) {
+      navigate('/login');
+   }
+
+   let load;
+   if (loading) {
+      load = <Spinner></Spinner>;
+   }
+
+   // if something wrong error 
+   let err;
+   if (error || updateErrMsg) {
+      err = (<div className='alert bg-warning'>{error.message}</div>)
+   }
+
+   // register form handler
+   const registerHandler = async (e) => {
+      e.preventDefault();
+      const username = e.target.username.value;
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+
+      await createUserWithEmailAndPassword(email, password);
+      await updateProfileData({ displayName: username });
+   }
+
    return (
       <section className='register__section'>
          <div className="container">
             <div className="row py-5">
                <div className="col-lg-7 mx-auto login_form text-center">
                   <h2 className='section_title my-3'>Register to <span>EC-House</span></h2>
-                  <form className='row g-3 py-5'>
+                  <form className='row g-3 py-5' onSubmit={registerHandler}>
                      <div className="col-lg-7 mx-auto">
                         <div className="form-floating mb-3">
                            <input type="text" className="form-control" id="floatingInput" name='username' placeholder="John Doe" />
@@ -29,8 +73,15 @@ const Register = () => {
                            <label htmlFor="floatingPassword">Password</label>
                         </div>
                      </div>
+
+                     <div className="col-lg-7 mx-auto">
+                        {load}
+                        <br />
+                        {err}
+                     </div>
+
                      <div className="col-lg-7 mx-auto text-center">
-                        <button className='btn btn-primary mt-3'>Register</button>
+                        <button type='submit' className='btn btn-primary mt-3'>Register</button>
                      </div>
                   </form>
 
@@ -38,12 +89,7 @@ const Register = () => {
                      <p>Already Logged In ? <Link to={'/login'}>Go To Login</Link></p>
                      <span>Or</span>
                      <br />
-                     <p>
-                        <button className='ms-3' title='Sign in with google'>
-                           <img src={google} className='me-1' alt="google-logo" />
-                           oogle
-                        </button>
-                     </p>
+                     <Social></Social>
                   </div>
                </div>
             </div>

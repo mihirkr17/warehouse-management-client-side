@@ -12,10 +12,10 @@ const Product = ({ product }) => {
             <strong>Quantity : {quantity}</strong> <br />
             <strong>Stock : {stock === 'in' ? <span className='badge bg-success'>{stock}</span> : <span className='bg-danger badge'>{stock}</span>}</strong> <br />
             <strong>Supplier Name : {sup_name}</strong>
-            <p>
+            <p className='py-3'>
                {description}
             </p>
-            <Link to={`/inventory/${_id}`}>Update</Link>
+            <Link className='mt-3' to={`/inventory/${_id}`}>Update</Link>
          </article>
       </div>
    );
