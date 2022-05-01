@@ -19,6 +19,11 @@ const NavigationBar = () => {
                         <NavLink className="nav-link" to="/blogs">Blogs</NavLink>
                      </li>
                   </ul>
+                  <ul className="navbar-nav mb-2 mb-lg-0">
+                     <li className="nav-item">
+                        <NavLink className="nav-link" aria-current="page" to="/login">Login</NavLink>
+                     </li>
+                  </ul>
                </div>
             </div>
          </nav>

@@ -95,7 +95,7 @@ const Inventory = () => {
                <h5 className="card-title">{product.name}</h5>
                <strong>Product Id : {product._id}</strong> <br />
                <strong>Brand : {product.brand}</strong> <br />
-               <strong>Price : {product.price}</strong> <br />
+               <strong>Price : ${product.price}</strong> <br />
                <strong>Quantity : {product.quantity}</strong> <br />
                <strong>Supplier Name : {product.sup_name}</strong> <br />
                <strong>Stock : {product.stock === 'in' ? <span className='badge bg-success'>{product.stock}</span> : <span className='bg-danger badge'>{product.stock}</span>}</strong> <br />
@@ -104,7 +104,7 @@ const Inventory = () => {
                   <p className='px-3 py-2'>{product.description}</p>
                </article>
                <div className="sp_card_btn">
-                  <button onClick={deliverProductHandler} className="card-link btn btn-sm btn-primary">Delivered</button>
+                  <button onClick={deliverProductHandler} className="card-link btn btn-sm btn-primary">Deliver</button>
                   <Link className='btn btn-sm btn-danger ms-4' to={'/'}>Go Back</Link>
                </div>
             </div>

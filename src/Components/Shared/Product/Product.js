@@ -8,7 +8,7 @@ const Product = ({ product }) => {
          <img src="" alt="" />
          <article className="product_card_body">
             <h5>{name}</h5>
-            <strong>Price : {price}</strong> <br />
+            <strong>Price : ${price}</strong> <br />
             <strong>Quantity : {quantity}</strong> <br />
             <strong>Stock : {stock === 'in' ? <span className='badge bg-success'>{stock}</span> : <span className='bg-danger badge'>{stock}</span>}</strong> <br />
             <strong>Supplier Name : {sup_name}</strong>

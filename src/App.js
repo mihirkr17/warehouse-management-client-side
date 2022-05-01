@@ -7,6 +7,8 @@ import Blogs from './Components/Pages/Blogs/Blogs';
 import NotFound from './Components/Pages/NotFound/NotFound';
 import Footer from './Components/Shared/Footer';
 import Inventory from './Components/Pages/Inventory/Inventory';
+import Login from './Components/Pages/Auth/Login/Login';
+import Register from './Components/Pages/Auth/Register/Register';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/blogs' element={<Blogs></Blogs>}></Route>
           <Route path='/inventory/:productId' element={<Inventory></Inventory>}></Route>
+          <Route path='/login' element={<Login></Login>}></Route>
+          <Route path='/register' element={<Register></Register>}></Route>
           <Route path='*' element={<NotFound></NotFound>}></Route>
         </Routes>
       </main>
