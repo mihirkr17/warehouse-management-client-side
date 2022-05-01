@@ -1,0 +1,21 @@
+.brand_card {
+   height: 150px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 1rem 0;
+   border: 1px solid var(--color-trans);
+   border-radius: 3px;
+   user-select: none;
+   transition: all 0.4s linear;
+}
+
+.brand_card:hover {
+   background-color: var(--color-light);
+}
+
+@media (max-width: 567px) {
+   .brand_card {
+      height: 120px;
+   }
+}

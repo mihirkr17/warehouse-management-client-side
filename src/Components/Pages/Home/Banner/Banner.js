@@ -7,7 +7,7 @@ import img4 from '../../../../Assets/images/slider-4.jpeg';
 
 const Banner = () => {
    return (
-      <div className='home_banner'>
+      <section className='home_banner'>
          <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
             <div className="carousel-indicators">
                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -38,7 +38,7 @@ const Banner = () => {
                <span className="visually-hidden">Next</span>
             </button>
          </div>
-      </div>
+      </section>
    );
 };
 

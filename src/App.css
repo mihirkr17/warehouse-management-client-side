@@ -25,6 +25,7 @@
   --color-update-alt: #8d3daf;
   --color-red: #dc3545;
   --color-red-alt: darkred;
+  --color-trans: #15171a24;
 
   /* Font variation */
   --font-primary: "Poppins", sans-serif;
@@ -36,9 +37,30 @@ body {
 }
 
 /* Re-usable class list */
+.section_style {
+  padding: 5rem 0;
+}
 
-/* reset */
+.section_title {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 4rem;
+  font-weight: bold;
+  position: relative;
+  color: var(--color-trans);
+  letter-spacing: 1.2px;
+}
 
+.section_title span {
+  letter-spacing: 1px;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  font-size: 2rem;
+  color: var(--color-primary);
+  transform: translate(-50%, -50%);
+}
+/* reset default style for tags */
 a,
 p {
   font-size: 0.9rem;
