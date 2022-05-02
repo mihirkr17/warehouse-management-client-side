@@ -32,7 +32,7 @@ function App() {
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/register' element={<Register></Register>}></Route>
           
-          <Route path='/my-item/:uid'
+          <Route path='/my-item'
             element={<AuthReq>
               <MyItem></MyItem>
             </AuthReq>}>

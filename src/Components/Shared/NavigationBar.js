@@ -35,10 +35,10 @@ const NavigationBar = () => {
                            :
                            <>
                               <li className="nav-item">
-                                 <NavLink className='nav-link' to={'/add-item/'}>Add Item</NavLink>
+                                 <NavLink className='nav-link' to={'/add-item'}>Add Item</NavLink>
                               </li>
                               <li className="nav-item">
-                                 <NavLink className='nav-link' to={'/my-item/'+ user.uid}>My Items</NavLink>
+                                 <NavLink className='nav-link' to={'/my-item'}>My Items</NavLink>
                               </li>
                               <li className="nav-item">
                                  <button className='btn btn-sm btn-danger' onClick={logoutHandler}>Log Out</button>
