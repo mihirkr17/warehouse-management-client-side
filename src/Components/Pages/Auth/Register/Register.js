@@ -81,14 +81,12 @@ const Register = () => {
                      </div>
 
                      <div className="col-lg-7 mx-auto text-center">
-                        <button type='submit' className='btn btn-primary mt-3'>Register</button>
+                        <button type='submit' className='btn btn-primary'>Register</button>
                      </div>
                   </form>
 
-                  <div className="login_bottom">
-                     <p>Already Logged In ? <Link to={'/login'}>Go To Login</Link></p>
-                     <span>Or</span>
-                     <br />
+                  <div className="register_bottom">
+                     <p>Already Logged In ? <Link to={'/login'}>Go To Login</Link> <br /> Or </p>
                      <Social></Social>
                   </div>
                </div>

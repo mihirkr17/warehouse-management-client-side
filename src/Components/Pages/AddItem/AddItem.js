@@ -1,56 +1,103 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 
 const AddItem = () => {
    const [user] = useAuthState(auth);
+   const [msg, setMsg] = useState('');
+
+   // add product handler form
+   const addProductHandler = async (e) => {
+      e.preventDefault();
+      let stock;
+
+      const name = e.target.productName.value;
+      const img = e.target.productImg.value;
+      const price = parseInt(e.target.productPrice.value);
+      const brand = e.target.productBrand.value;
+      const quantity = parseInt(e.target.productQuantity.value);
+      const description = e.target.productDescription.value;
+      const sup_name = user.displayName;
+      const sup_email = user.email;
+
+      if (quantity < 0) {
+         setMsg(<p className='text-danger text-center py-3'>Product quantity value wrong</p>);
+         return;
+      } else {
+         if (quantity === 0) {
+            stock = 'out';
+         } else {
+            stock = 'in';
+         }
+      }
+
+      const allData = { name, img, price, brand, quantity, description, sup_name, sup_email, stock };
+
+      const response = await fetch('http://localhost:5000/product', {
+         method: "POST",
+         headers: {
+            'content-type': 'application/json'
+         },
+         body: JSON.stringify(allData)
+      });
+
+      const data = await response.json();
+
+      if (data.insertedId) {
+         e.target.reset();
+         setMsg(<p className='text-success text-center py-3'>Your product added successfully</p>);
+      }
+   }
+
+   useEffect(() => {
+      setTimeout(() => {
+         setMsg('');
+      }, 5000);
+   }, [msg]);
 
    return (
-      <section className='add_item__section py-4 d-flex align-items-center justify-content-center' style={{ minHeight: "90vh" }}>
+      <section className='add_item__section py-4' style={{ minHeight: "90vh" }}>
+         <h2 className='section_title'>Add <span>product</span></h2>
          <div className="container">
             <div className="col-lg-6 mx-auto">
-               <form className="row g-3">
-                  <div className="col-md-6">
-                     <label htmlFor="inputEmail4" className="form-label">User Email</label>
-                     <input type="email" name='uEmail' defaultValue={user.email} className="form-control" id="inputEmail4" />
-                  </div>
-                  <div className="col-md-6">
-                     <label htmlFor="inputUid" className="form-label">User Id</label>
-                     <input type="text" name='uid' defaultValue={user.uid} className="form-control" id="inputUid" />
-                  </div>
+               {msg}
+               <form className="row g-3 mt-4" onSubmit={addProductHandler}>
                   <div className="col-12">
                      <label htmlFor="productName" className="form-label">Product Name</label>
                      <input type="text" name='productName' className="form-control" id="productName" placeholder="Asus Max M1" />
                   </div>
                   <div className="col-12">
-                     <label htmlFor="productBrand" className="form-label">Product Brand</label>
-                     <input type="text" name='productBrand' className="form-control" id="productBrand" placeholder="Asus, Samsung, Acer" />
-                  </div>
-                  <div className="col-md-6">
-                     <label htmlFor="inputCity" className="form-label">City</label>
-                     <input type="text" className="form-control" id="inputCity" />
+                     <label htmlFor="productImg" className="form-label">Product Image Url</label>
+                     <input type="text" name='productImg' className="form-control" id="productImg" placeholder="http://..." />
                   </div>
                   <div className="col-md-4">
-                     <label htmlFor="inputState" className="form-label">State</label>
-                     <select id="inputState" className="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                     <label htmlFor="productPrice" className="form-label">Price</label>
+                     <input type="number" name='productPrice' className="form-control" id="productPrice" />
+                  </div>
+                  <div className="col-md-6">
+                     <label htmlFor="productBrand" className="form-label">Brand</label>
+                     <select id="productBrand" name='productBrand' className="form-select">
+                        <option value=''>Choose Brand</option>
+                        <option value={'hp'}>hp</option>
+                        <option value={'lg'}>lg</option>
+                        <option value={'samsung'}>samsung</option>
+                        <option value={'toshiba'}>toshiba</option>
+                        <option value={'microsoft'}>microsoft</option>
+                        <option value={'acer'}>acer</option>
+                        <option value={'lenovo'}>lenovo</option>
                      </select>
                   </div>
                   <div className="col-md-2">
-                     <label htmlFor="inputZip" className="form-label">Zip</label>
-                     <input type="text" className="form-control" id="inputZip" />
+                     <label htmlFor="productQuantity" className="form-label">Quantity</label>
+                     <input type="number" className="form-control" id="productQuantity" />
+                  </div>
+
+                  <div className="mb-3 col-12">
+                     <label htmlFor="productDescription" className="form-label">Product Description</label>
+                     <textarea className="form-control" name='productDescription' id="productDescription" rows="3" placeholder='Description about product'></textarea>
                   </div>
                   <div className="col-12">
-                     <div className="form-check">
-                        <input className="form-check-input" type="checkbox" id="gridCheck" />
-                        <label className="form-check-label" htmlFor="gridCheck">
-                           Check me out
-                        </label>
-                     </div>
-                  </div>
-                  <div className="col-12">
-                     <button type="submit" className="btn btn-primary">Sign in</button>
+                     <button type="submit" className="btn btn-primary">Add</button>
                   </div>
                </form>
             </div>

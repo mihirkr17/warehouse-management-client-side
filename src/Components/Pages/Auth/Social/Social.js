@@ -1,4 +1,5 @@
 import React from 'react';
+import './Social.css';
 import google from '../../../../Assets/images/logos/google.png';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
@@ -33,13 +34,15 @@ const Social = () => {
       await signInWithGoogle();
    }
    return (
-      <p>
-         {load} <br /> {errMsg} <br />
-         <button className='ms-3' onClick={socialLoginHandler} title='Sign in with google'>
+      <div className='third_party_auth'>
+         <div className="auth_response">
+            {load || errMsg}
+         </div>
+         <button className='google_btn' onClick={socialLoginHandler} title='Sign in with google'>
             <img src={google} className='me-1' alt="google-logo" />
-            oogle
+            <span>Login With Google</span>
          </button>
-      </p>
+      </div>
    );
 };
 

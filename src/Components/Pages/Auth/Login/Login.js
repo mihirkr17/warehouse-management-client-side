@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Login.css';
-import google from '../../../../Assets/images/logos/google.png';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
 import Spinner from '../../../Shared/Spinner';
+import Social from '../Social/Social';
 
 
 const Login = () => {
@@ -70,25 +70,16 @@ const Login = () => {
                      </div>
 
                      <div className="col-lg-7 mx-auto">
-                        {load}
-                        <br />
-                        {errors}
+                        {load || errors}
                      </div>
                      <div className="col-lg-7 mx-auto text-center">
-                        <button type='submit' className='btn btn-primary mt-3'>Login</button>
+                        <button type='submit' className='btn btn-primary'>Login</button>
                      </div>
                   </form>
 
                   <div className="login_bottom">
-                     <p>Don't have a account ? <Link to={'/register'}>Go Here</Link></p>
-                     <span>Or</span>
-                     <br />
-                     <p>
-                        <button className='ms-3' title='Sign in with google'>
-                           <img src={google} className='me-1' alt="google-logo" />
-                           oogle
-                        </button>
-                     </p>
+                     <p>Don't have a account ? <Link to={'/register'}>Sign Up</Link> <br /> Or </p>
+                     <Social></Social>
                   </div>
                </div>
             </div>
