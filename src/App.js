@@ -12,6 +12,7 @@ import Register from './Components/Pages/Auth/Register/Register';
 import AuthReq from './Components/Pages/Auth/AuthReq/AuthReq';
 import MyItem from './Components/Pages/MyItem/MyItem';
 import AddItem from './Components/Pages/AddItem/AddItem';
+import ManageInventory from './Components/Pages/ManageInventory/ManageInventory';
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
           </Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/register' element={<Register></Register>}></Route>
-          
+
           <Route path='/my-item'
             element={<AuthReq>
               <MyItem></MyItem>
@@ -41,7 +42,10 @@ function App() {
           <Route path='/add-item'
             element={<AuthReq>
               <AddItem></AddItem>
-            </AuthReq>}></Route>
+            </AuthReq>}>
+          </Route>
+
+          <Route path='/inventory' element={<ManageInventory></ManageInventory>}></Route>
 
           <Route path='*' element={<NotFound></NotFound>}></Route>
         </Routes>
