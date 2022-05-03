@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import WarningMsg from '../../Shared/Warning/WarningMsg';
-import './Inventory.css';
+import './ProductDetail.css';
 
-
-const Inventory = () => {
+const ProductDetail = () => {
    const [product, setProduct] = useState({});
+   const [disable, setDisable] = useState(false);
    const [msg, setMsg] = useState('');
    const { productId } = useParams();
 
@@ -14,6 +13,14 @@ const Inventory = () => {
          .then(res => res.json())
          .then(data => setProduct(data));
    }, [productId, product]);
+
+   useEffect(() => {
+      if (parseInt(product.quantity) === 0) {
+         setDisable(true);
+      } else {
+         setDisable(false);
+      }
+   }, [product.quantity]);
 
    // Quantity handler 
    const quantityUpdater = async (quantity) => {
@@ -32,49 +39,35 @@ const Inventory = () => {
 
    // Delivering product  
    const deliverProductHandler = async () => {
-      let productQuantity = parseInt(product.quantity);
+      let quantity = parseInt(product.quantity);
       let stock;
-      if (productQuantity > 0) {
-         productQuantity -= 1;
-
-         if (productQuantity === 0) {
-            stock = 'out';
-         } else {
-            stock = 'in';
-         }
-
-         let newQuantity = {
-            quantity: productQuantity,
-            stock: stock
-         }
-         const data = await quantityUpdater(newQuantity);
+      if (quantity > 0) {
+         quantity -= 1;
+         stock = quantity === 0 ? 'out' : 'in';
+         const data = await quantityUpdater({ quantity, stock });
          setProduct(data);
-         setMsg("Product delivered successfully");
+         setMsg(<p className='text-success text-center py-3'>Product delivered successfully</p>);
       } else {
-         setMsg("Product out of stock. So you aren't able to deliver this product");
+         setMsg(<p className='text-danger text-center py-3'>Product out of stock. So you aren't able to deliver this product</p>);
       }
    }
 
    // Restock product
    const stockProductHandler = async (e) => {
       e.preventDefault();
-
+      const stock = 'in';
       let quantityValue = e.target.numbers.value;
       let quantity = parseInt(product.quantity) + parseInt(quantityValue);
 
       if (quantityValue === '') {
-         setMsg('Please write some value');
+         setMsg(<p className='text-danger text-center py-3'>Please write some value</p>);
       } else if (quantityValue < 0) {
-         setMsg('Invalid input value! Must be greater than 1');
+         setMsg(<p className='text-danger text-center py-3'>Invalid input value! Must be greater than 1</p>);
       } else {
-         let newQuantity = {
-            quantity: quantity,
-            stock: 'in'
-         }
-         const data = await quantityUpdater(newQuantity);
+         const data = await quantityUpdater({ quantity, stock });
          setProduct(data);
          e.target.reset();
-         setMsg("successfully added product");
+         setMsg(<p className='text-success text-center py-3'>successfully updated product quantity</p>);
       }
    }
 
@@ -86,7 +79,7 @@ const Inventory = () => {
 
    return (
       <section className='inventory__section'>
-         <WarningMsg msg={msg} />
+         {msg}
          <div className="sp_card row">
             <div className="sp_card_img col-lg-4 col-sm-12">
                <img src="..." className="card-img-top" alt="..." />
@@ -95,6 +88,7 @@ const Inventory = () => {
                <h5 className="card-title">{product.name}</h5>
                <strong>Product Id : {product._id}</strong> <br />
                <strong>Brand : {product.brand}</strong> <br />
+               <strong>Category : {product.category}</strong> <br />
                <strong>Price : ${product.price}</strong> <br />
                <strong>Quantity : {product.quantity}</strong> <br />
                <strong>Supplier Name : {product.sup_name}</strong> <br />
@@ -104,7 +98,7 @@ const Inventory = () => {
                   <p className='px-3 py-2'>{product.description}</p>
                </article>
                <div className="sp_card_btn">
-                  <button onClick={deliverProductHandler} className="card-link btn btn-sm btn-primary">Deliver</button>
+                  <button disabled={disable === true ? true : false} onClick={deliverProductHandler} className="card-link btn btn-sm btn-primary">{disable === true ? "Stock Out" : "Deliver"}</button>
                   <Link className='btn btn-sm btn-danger ms-4' to={'/'}>Go Back</Link>
                </div>
             </div>
@@ -119,4 +113,4 @@ const Inventory = () => {
    );
 };
 
-export default Inventory;
+export default ProductDetail;

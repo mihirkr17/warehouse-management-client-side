@@ -44,7 +44,7 @@ body {
 .section_title {
   text-align: center;
   padding: 10px 0;
-  font-size: 4rem;
+  font-size: 1.3rem;
   font-weight: bold;
   position: relative;
   color: var(--color-trans);
@@ -54,11 +54,21 @@ body {
 .section_title span {
   letter-spacing: 1px;
   position: absolute;
-  top: 90%;
+  top: 98%;
   left: 50%;
   font-size: 2rem;
   color: var(--color-primary);
   transform: translate(-50%, -50%);
+}
+
+.card_main {
+  padding: 2rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 /* reset default style for tags */
 a,

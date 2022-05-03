@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Social.css';
 import google from '../../../../Assets/images/logos/google.png';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Spinner from '../../../Shared/Spinner';
+import SpinnerBtn from '../../../Shared/SpinnerBtn';
 
 const Social = () => {
    // social login google
@@ -17,18 +18,14 @@ const Social = () => {
 
    let errMsg;
    if (error) {
-      errMsg = <div><p>Error: {error.message}</p></div>;
+      errMsg = <div><p className='text-danger'>Error: {error.message}</p></div>;
    };
 
-   // Loading when trying to login the site
-   let load;
-   if (loading) {
-      load = <Spinner></Spinner>;
-   }
-
-   if (user) {
-      navigate(from, { replace: true });
-   }
+   useEffect(() => {
+      if (user) {
+         navigate(from, { replace: true });
+      }
+   }, [from, navigate, user])
 
    const socialLoginHandler = async () => {
       await signInWithGoogle();
@@ -36,11 +33,11 @@ const Social = () => {
    return (
       <div className='third_party_auth'>
          <div className="auth_response">
-            {load || errMsg}
+            {errMsg}
          </div>
          <button className='google_btn' onClick={socialLoginHandler} title='Sign in with google'>
             <img src={google} className='me-1' alt="google-logo" />
-            <span>Login With Google</span>
+            {loading ? <><SpinnerBtn></SpinnerBtn> <span className='align-self-center'>Logging...</span></> : <span className='btn_text'>Login With Google</span>}
          </button>
       </div>
    );

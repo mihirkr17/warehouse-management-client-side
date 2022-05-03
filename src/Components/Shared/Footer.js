@@ -5,8 +5,12 @@ import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg
 import { NavLink } from 'react-router-dom';
 import img1 from '../../Assets/images/footer/img-1.png';
 import img2 from '../../Assets/images/footer/img-2.png';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+
 
 const Footer = () => {
+   const [user] = useAuthState(auth);
    const newDate = new Date();
    const year = newDate.getFullYear();
 
@@ -30,6 +34,12 @@ const Footer = () => {
                   <div className="d-flex flex-column pt-3">
                      <NavLink to={'/'}>Home</NavLink>
                      <NavLink to={'/blogs'}>Blogs</NavLink>
+                     {
+                        user ? <>
+                           <NavLink to={'/add-item'}>Add Item</NavLink>
+                           <NavLink to={'/my-item'}>My Items</NavLink>
+                        </> : ''
+                     }
                   </div>
                </div>
                <div className="col-lg-4 py-3">

@@ -4,7 +4,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { NavLink } from 'react-router-dom';
 import auth from '../../firebase.init';
 
-
 const NavigationBar = () => {
    const [user] = useAuthState(auth);
    const logoutHandler = () => {
@@ -40,7 +39,7 @@ const NavigationBar = () => {
                               <li className="nav-item">
                                  <NavLink className='nav-link' to={'/my-item'}>My Items</NavLink>
                               </li>
-                              <li className="nav-item">
+                              <li className="nav-item ms-2">
                                  <button className='btn btn-sm btn-danger' onClick={logoutHandler}>Log Out</button>
                               </li>
                            </>

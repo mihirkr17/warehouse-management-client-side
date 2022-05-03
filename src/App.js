@@ -6,14 +6,13 @@ import Home from './Components/Pages/Home/Home';
 import Blogs from './Components/Pages/Blogs/Blogs';
 import NotFound from './Components/Pages/NotFound/NotFound';
 import Footer from './Components/Shared/Footer';
-import Inventory from './Components/Pages/Inventory/Inventory';
 import Login from './Components/Pages/Auth/Login/Login';
 import Register from './Components/Pages/Auth/Register/Register';
 import AuthReq from './Components/Pages/Auth/AuthReq/AuthReq';
 import MyItem from './Components/Pages/MyItem/MyItem';
 import AddItem from './Components/Pages/AddItem/AddItem';
 import ManageInventory from './Components/Pages/ManageInventory/ManageInventory';
-
+import ProductDetail from './Components/Pages/ProductDetails/ProductDetail';
 
 function App() {
   return (
@@ -25,9 +24,10 @@ function App() {
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/blogs' element={<Blogs></Blogs>}></Route>
+          <Route path='/inventory' element={<ManageInventory></ManageInventory>}></Route>
           <Route path='/inventory/:productId'
             element={<AuthReq>
-              <Inventory></Inventory>
+              <ProductDetail></ProductDetail>
             </AuthReq>}>
           </Route>
           <Route path='/login' element={<Login></Login>}></Route>
@@ -44,8 +44,6 @@ function App() {
               <AddItem></AddItem>
             </AuthReq>}>
           </Route>
-
-          <Route path='/inventory' element={<ManageInventory></ManageInventory>}></Route>
 
           <Route path='*' element={<NotFound></NotFound>}></Route>
         </Routes>

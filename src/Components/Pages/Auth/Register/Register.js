@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
 import Social from '../Social/Social';
-import Spinner from '../../../Shared/Spinner';
+import SpinnerBtn from '../../../Shared/SpinnerBtn';
 
 const Register = () => {
    // navigate
@@ -25,15 +25,10 @@ const Register = () => {
       navigate('/login');
    }
 
-   let load;
-   if (loading) {
-      load = <Spinner></Spinner>;
-   }
-
    // if something wrong error 
    let err;
    if (error || updateErrMsg) {
-      err = (<div className='alert bg-warning'>{error.message}</div>)
+      err = (<div className='text-danger text-center'>{error.message}</div>)
    }
 
    // register form handler
@@ -51,7 +46,7 @@ const Register = () => {
       <section className='register__section'>
          <div className="container">
             <div className="row py-5">
-               <div className="col-lg-7 mx-auto login_form text-center">
+               <div className="col-lg-7 mx-auto login_form text-center card_main">
                   <h2 className='section_title my-3'>Register to <span>EC-House</span></h2>
                   <form className='row g-3 py-5' onSubmit={registerHandler}>
                      <div className="col-lg-7 mx-auto">
@@ -75,13 +70,13 @@ const Register = () => {
                      </div>
 
                      <div className="col-lg-7 mx-auto">
-                        {load}
-                        <br />
                         {err}
                      </div>
 
                      <div className="col-lg-7 mx-auto text-center">
-                        <button type='submit' className='btn btn-primary'>Register</button>
+                        <button type='submit' className='btn btn-primary'>
+                           {loading ? <><SpinnerBtn></SpinnerBtn> Registering...</> : "Register"}
+                        </button>
                      </div>
                   </form>
 

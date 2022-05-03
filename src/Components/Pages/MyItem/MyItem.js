@@ -18,8 +18,6 @@ const MyItem = () => {
          .then(data => setProduct(data));
    }, [user.email, product]);
 
-
-
    const deleteProductHandle = async (id) => {
       const mm = await deleteProductHandler(id);
       setMsg(mm);

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
-import Spinner from '../../../Shared/Spinner';
 import Social from '../Social/Social';
+import SpinnerBtn from '../../../Shared/SpinnerBtn';
 
 
 const Login = () => {
@@ -21,20 +21,18 @@ const Login = () => {
    ] = useSignInWithEmailAndPassword(auth);
 
    // if logged in then redirect to home page 
-   if (user) {
-      navigate(comingFrom, { replace: true });
-   }
+   
 
-   // if loading 
-   let load;
-   if (loading) {
-      load = <Spinner></Spinner>
-   }
+   useEffect(() => {
+      if (user) {
+         navigate(comingFrom, { replace: true });
+      }
+   }, [comingFrom, navigate, user]);
 
    // if error
    let errors;
    if (error) {
-      errors = (<div className='alert bg-warning'>{error.message}</div>)
+      errors = (<div className='text-danger text-center'>{error.message}</div>)
    }
 
    // user login handler
@@ -50,10 +48,10 @@ const Login = () => {
          <div className="container">
 
             <div className="row py-5">
-               <div className="col-lg-5 login_image">
+               <div className="col-lg-6 login_image">
 
                </div>
-               <div className="col-lg-7 login_form text-center">
+               <div className="col-lg-6 login_form text-center card_main">
                   <h2 className='section_title my-3'>Login to <span>EC-House</span></h2>
                   <form className='row g-3 py-5' onSubmit={loginHandler}>
                      <div className="col-lg-7 mx-auto">
@@ -70,10 +68,12 @@ const Login = () => {
                      </div>
 
                      <div className="col-lg-7 mx-auto">
-                        {load || errors}
+                        {errors}
                      </div>
                      <div className="col-lg-7 mx-auto text-center">
-                        <button type='submit' className='btn btn-primary'>Login</button>
+                        <button type='submit' className='btn btn-primary'>
+                           {loading ? <><SpinnerBtn></SpinnerBtn> Logging...</> : "Login"}
+                        </button>
                      </div>
                   </form>
 

@@ -14,6 +14,7 @@ const ProductTable = ({ product, deleteProductHandle, viewProductHandle }) => {
                   <th scope="col">Serial</th>
                   <th scope="col">Name</th>
                   <th scope="col">Brand</th>
+                  <th scope="col">Category</th>
                   <th scope="col">Price</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Stock</th>
@@ -24,13 +25,14 @@ const ProductTable = ({ product, deleteProductHandle, viewProductHandle }) => {
             <tbody>
                {
                   product ? product.map(items => {
-                     const { _id, name, price, brand, quantity, stock, sup_name } = items;
+                     const { _id, name, price, brand, category, quantity, stock, sup_name } = items;
 
                      return (
                         <tr key={_id}>
                            <th scope="row">{serial += 1}</th>
                            <td>{name}</td>
                            <td>{brand}</td>
+                           <td>{category}</td>
                            <td>${price}</td>
                            <td>{quantity}</td>
                            <td>{stock}</td>

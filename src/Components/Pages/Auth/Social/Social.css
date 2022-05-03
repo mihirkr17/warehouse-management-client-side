@@ -30,7 +30,7 @@
    padding: 4px;
 }
 
-.google_btn span {
+.google_btn .btn_text {
    align-self: center;
    width: 100%;
 }
