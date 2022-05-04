@@ -23,7 +23,7 @@ const AddItem = () => {
       const brand = e.target.productBrand.value;
       const quantity = parseInt(e.target.productQuantity.value);
       const description = e.target.productDescription.value;
-      const sup_name = user.displayName;
+      const sup_name = e.target.productSupplier.value;
       const sup_email = user.email;
       const category = e.target.productCategory.value;
 
@@ -100,6 +100,10 @@ const AddItem = () => {
                         <option value={'microsoft'}>microsoft</option>
                         <option value={'acer'}>acer</option>
                         <option value={'lenovo'}>lenovo</option>
+                        <option value={'apple'}>apple</option>
+                        <option value="DJI">DJI</option>
+                        <option value="zeiss">zeiss</option>
+                        <option value="SureCall">SureCall</option>
                      </select>
                   </div>
 
@@ -115,15 +119,20 @@ const AddItem = () => {
                      </select>
                   </div>
 
+                  <div className="col-md-6">
+                     <label htmlFor="productSupplier" className="form-label">Product Supplier Name</label>
+                     <input type="text" name='productSupplier' className="form-control" id="productSupplier" placeholder="John Doe" />
+                  </div>
+
                   <div className="mb-3 col-12">
                      <label htmlFor="productDescription" className="form-label">Product Description</label>
                      <textarea className="form-control" name='productDescription' id="productDescription" rows="3" placeholder='Description about product'></textarea>
                   </div>
                   <div className="col-12">
-                     <button type="submit" className="btn btn-primary">
+                     <button type="submit" className="bt9 bt9_add">
                         {loading === true ? <><SpinnerBtn></SpinnerBtn> Adding...</> : <><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add</>}
                      </button>
-                     <button type='reset' className="btn btn-danger ms-4">Reset</button>
+                     <button type='reset' className="bt9 bt9_close ms-4">Reset</button>
                   </div>
                </form>
             </div>

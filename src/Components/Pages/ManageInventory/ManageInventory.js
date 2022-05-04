@@ -44,7 +44,7 @@ const ManageInventory = () => {
                      product.length <= 0 ? "No product Found" : product.length === 1 ? "Total " + product.length + " Product available" : "Total " + product.length + " Products available"
                   }
                </h6>
-               <NavLink className='btn btn-primary' to={'/add-item'}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add Item</NavLink>
+               <NavLink className='bt9 bt9_add' to={'/add-item'}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add Item</NavLink>
             </div>
             <ProductTable
                viewProductHandle={viewProductHandle}

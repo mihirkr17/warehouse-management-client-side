@@ -11,7 +11,7 @@ import samsung from '../../../../Assets/images/brands/samsung.png';
 const Brands = () => {
    return (
       <section className='brands__section section_style'>
-         <h2 className="section_title">Our Brands <span>Make</span></h2>
+         <h2 className="section_title">Our Popular <span>Brands</span></h2>
          <div className="row mt-5">
             <div className="col-lg-3">
                <div className="brand_card">

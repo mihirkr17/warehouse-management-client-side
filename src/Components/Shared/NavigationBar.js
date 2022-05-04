@@ -43,7 +43,7 @@ const NavigationBar = () => {
                                  <NavLink className='nav-link' to={'/my-item'}>My Items</NavLink>
                               </li>
                               <li className="nav-item ms-2">
-                                 <button className='btn btn-sm btn-danger' onClick={logoutHandler}>Log Out</button>
+                                 <button className='bt9 bt9_close' onClick={logoutHandler}>Log Out</button>
                               </li>
                            </>
                      }

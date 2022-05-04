@@ -1,7 +1,7 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -10,6 +10,7 @@ const ProductDetail = () => {
    const [disable, setDisable] = useState(false);
    const [msg, setMsg] = useState('');
    const { productId } = useParams();
+   const navigate = useNavigate();
 
    useEffect(() => {
       fetch(`http://localhost:5000/inventory/${productId}`)
@@ -71,6 +72,10 @@ const ProductDetail = () => {
       }
    }
 
+   const goHome = () => {
+      navigate('/');
+   }
+
    useEffect(() => {
       setTimeout(() => {
          setMsg('');
@@ -78,42 +83,49 @@ const ProductDetail = () => {
    }, [msg]);
 
    return (
-      <section className='inventory__section'>
-         <div className="card_main row">
-            <div className="sp_card_img col-lg-4 col-sm-12">
-               <img src={product.img} className="card-img-top" alt="..." />
-            </div>
-            <div className="sp_card_body col-lg-8 col-sm-12">
-               <h5 className="card-title">{product.name}</h5>
-               <strong>Product Id : {product._id}</strong> <br />
-               <strong>Brand : {product.brand}</strong> <br />
-               <strong>Category : {product.category}</strong> <br />
-               <strong>Price : ${product.price}</strong> <br />
-               <strong>Quantity : {product.quantity}</strong> <br />
-               <strong>Supplier Name : {product.sup_name}</strong> <br />
-               <strong>Stock : {product.stock === 'in' ? <span className='badge bg-success'>{product.stock}</span> : <span className='bg-danger badge'>{product.stock}</span>}</strong> <br />
+      <section className='product_details__section'>
+         <div className="container">
+            <div className="sp_card">
+               <div className="card_main row">
+                  <div className="sp_card_img col-lg-4 col-sm-12">
+                     <img src={product.img} className="card-img-top" alt="..." />
+                  </div>
+                  <div className="sp_card_body col-lg-8 col-sm-12">
+                     <h5 className="card-title py-3">{product.name}</h5>
 
-               <article className="card-text py-3"><strong>Description</strong> : <br />
-                  <p className='px-3 py-2'>{product.description}</p>
-               </article>
-               <div className="sp_card_btn">
-                  <button disabled={disable === true ? true : false} onClick={deliverProductHandler} className="card-link btn btn-sm btn-primary">{disable === true ? "Stock Out" : "Delivery"}</button>
-                  <Link className='btn btn-sm btn-danger ms-4' to={'/'}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></Link>
+                     <div className="sp_card_features">
+                        <strong>Product Id : {product._id}</strong> <br />
+                        <strong>Brand : {product.brand}</strong> <br />
+                        <strong>Category : {product.category}</strong> <br />
+                        <strong>Price : ${product.price}</strong> <br />
+                        <strong>Quantity : {product.quantity}</strong> <br />
+                        <strong>Supplier Name : {product.sup_name}</strong> <br />
+                        <strong>Stock : {product.stock === 'in' ? <span className='badge bg-success'>{product.stock}</span> : <span className='bg-danger badge'>{product.stock}</span>}</strong> <br />
+                     </div>
+
+                     <article className="sp_card_description card-text py-3"><strong>Description</strong> : <br />
+                        <p className='px-3 py-2'>{product.description}</p>
+                     </article>
+                     <div className="sp_card_btn">
+                        <button disabled={disable === true ? true : false} onClick={deliverProductHandler} className="card-link bt9 bt9_edit">{disable === true ? "Stock Out" : "Delivered"}</button>
+                        <button className='bt9 bt9_close ms-4' onClick={goHome}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></button>
+                     </div>
+                  </div>
                </div>
+            </div>
+            {msg}
+            <div className="col-lg-6 col-sm-12 col-md-8 px-5 mx-auto sp_form">
+               <form action="" className='mt-3 py-5 text-center' onSubmit={stockProductHandler}>
+                  <h5>Restock Product</h5>
+                  <div className="row">
+                     <div className="col-12 d-flex">
+                        <input type="number" name="numbers" className='w-75 form-control form-control-sm' id="numbers" />
+                        <button type='submit' className='w-25 ms-2 bt9 bt9_edit'>Re-stock</button>
+                     </div>
+                  </div>
+               </form>
             </div>
          </div>
-         {msg}
-         <form action="" className='mt-3 py-4 text-center' onSubmit={stockProductHandler}>
-            <h5>Restock Product</h5>
-            <div className="row">
-               <div className="col-8">
-                  <input type="number" name="numbers" className='form-control form-control-sm' id="numbers" />
-               </div>
-               <div className="col-4">
-                  <button type='submit' className='btn btn-sm btn-primary'>Re-stock</button>
-               </div>
-            </div>
-         </form>
       </section>
    );
 };

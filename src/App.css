@@ -17,15 +17,16 @@
   --color-primary-alt: #03d8c3;
   --color-success: green;
   --color-success-alt: #004e00;
-  --color-secondary: #765df8;
-  --color-secondary-alt: #8d3daf;
+  --color-secondary-alt: #765df8;
+  --color-secondary: #8d3daf;
   --color-sweet: #e6425e;
   --color-sweet-alt: #da33b6;
-  --color-update: #8d3daf;
-  --color-update-alt: #8d3daf;
+  --color-update: #0a95e7;
+  --color-update-alt: #017dc5;
   --color-red: #dc3545;
   --color-red-alt: darkred;
   --color-trans: #15171a24;
+  --color-gray: gray;
 
   /* Font variation */
   --font-primary: "Poppins", sans-serif;
@@ -66,10 +67,89 @@ body {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+/* Reusable btn  */
+.bt9 {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  background: transparent;
+  transition: all 0.4s ease-in-out;
+  text-decoration: none;
+  border: none;
+}
+
+/* Update btn style */
+.bt9_edit {
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.bt9_edit:disabled {
+  cursor: not-allowed;
+  border: 1px solid var(--color-trans);
+  color: var(--color-gray);
+  background-color: var(--color-trans);
+}
+
+.bt9_edit:not([disabled]):hover {
+  background-color: var(--color-success);
+  color: var(--color-light);
+}
+
+/* close btn style */
+.bt9_close {
+  border: 1px solid var(--color-red);
+  color: var(--color-light);
+  background-color: var(--color-red);
+}
+
+.bt9_close:disabled {
+  cursor: not-allowed;
+}
+
+.bt9_close:not([disabled]):hover {
+  color: var(--color-light-alt);
+}
+
+/* btn update */
+.bt9_update {
+  background-color: var(--color-update);
+  color: var(--color-light);
+}
+
+.bt9_update:hover {
+  background-color: var(--color-update-alt);
+  color: var(--color-light-alt);
+}
+
+/* btn primary */
+.bt9_primary {
+  background-color: var(--color-primary);
+  color: var(--color-light);
+  border-radius: 20px;
+}
+
+.bt9_primary:hover {
+  background-color: var(--color-primary-alt);
+  color: var(--color-dark);
+}
+
+/* btn add */
+.bt9_add {
+  background-color: var(--color-secondary);
+  color: var(--color-light);
+  border: 1px solid var(--color-secondary);
+}
+
+.bt9_add:hover {
+  background-color: var(--color-secondary-alt);
+  color: var(--color-light);
+}
+
 /* reset default style for tags */
 a,
 p {

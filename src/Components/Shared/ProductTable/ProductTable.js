@@ -30,7 +30,7 @@ const ProductTable = ({ product, deleteProductHandle, viewProductHandle }) => {
                      return (
                         <tr key={_id}>
                            <th scope="row">{serial += 1}</th>
-                           <td>{name}</td>
+                           <td>{name.length >= 40 ? name.slice(0, 40) + "..." : name}</td>
                            <td>{brand}</td>
                            <td>{category}</td>
                            <td>${price}</td>

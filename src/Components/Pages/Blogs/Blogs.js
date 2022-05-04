@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import Spinner from '../../Shared/Spinner';
 
 const Blogs = () => {
    document.title = "EC-House Blog";
    const [faq, setFaq] = useState([]);
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
+      setLoading(true);
       fetch('http://localhost:5000/blog')
          .then(res => res.json())
-         .then(data => setFaq(data));
+         .then(data => {
+            setFaq(data);
+            setLoading(false);
+         });
    }, []);
 
    let ques = 0;
@@ -19,7 +25,7 @@ const Blogs = () => {
 
             <div className="row">
                {
-                  faq.map(items => {
+                  loading === false ? faq.map(items => {
                      const { question, answer, _id } = items;
                      return (
                         <div className="col-lg-8 mx-auto card_main mb-4" key={_id}>
@@ -29,7 +35,7 @@ const Blogs = () => {
                            </article>
                         </div>
                      )
-                  })
+                  }) : <Spinner></Spinner>
                }
             </div>
          </div>
