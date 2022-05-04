@@ -11,7 +11,7 @@ const Inventories = () => {
    const [loading, setLoading] = useState(false);
    useEffect(() => {
       setLoading(true);
-      fetch('http://localhost:5000/product')
+      fetch('http://localhost:5000/inventory')
          .then(res => res.json())
          .then(data => {
             setLoading(false);

@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Login.css';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
 import Social from '../Social/Social';
 import SpinnerBtn from '../../../Shared/SpinnerBtn';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
+   document.title = "EC-House Login";
+   const [email, setEmail] = useState('');
    const location = useLocation();
    const navigate = useNavigate();
    let comingFrom = location.state?.from?.pathname || '/';
@@ -20,9 +24,10 @@ const Login = () => {
       error,
    ] = useSignInWithEmailAndPassword(auth);
 
-   // if logged in then redirect to home page 
-   
+   // use password reset with email
+   const [sendPasswordResetEmail, sending, pwdError] = useSendPasswordResetEmail(auth);
 
+   // if logged in then redirect to home page 
    useEffect(() => {
       if (user) {
          navigate(comingFrom, { replace: true });
@@ -31,8 +36,14 @@ const Login = () => {
 
    // if error
    let errors;
-   if (error) {
+   if (error || pwdError) {
       errors = (<div className='text-danger text-center'>{error.message}</div>)
+   }
+
+   // sending email
+   let send;
+   if (sending) {
+      send = <p>Sending...</p>;
    }
 
    // user login handler
@@ -41,6 +52,15 @@ const Login = () => {
       const email = e.target.email.value;
       const password = e.target.password.value;
       signInWithEmailAndPassword(email, password);
+   }
+
+   const resetPasswordHandler = async () => {
+      if (email) {
+         await sendPasswordResetEmail(email);
+         toast("Email send");
+      } else {
+         toast('Please enter your email address');
+      }
    }
 
    return (
@@ -56,7 +76,7 @@ const Login = () => {
                   <form className='row g-3 py-5' onSubmit={loginHandler}>
                      <div className="col-lg-7 mx-auto">
                         <div className="form-floating mb-3">
-                           <input type="email" className="form-control" id="floatingInput" name='email' placeholder="name@example.com" />
+                           <input type="email" className="form-control" id="floatingInput" name='email' onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
                            <label htmlFor="floatingInput">Email address</label>
                         </div>
                      </div>
@@ -68,7 +88,7 @@ const Login = () => {
                      </div>
 
                      <div className="col-lg-7 mx-auto">
-                        {errors}
+                        {errors || send}
                      </div>
                      <div className="col-lg-7 mx-auto text-center">
                         <button type='submit' className='btn btn-primary'>
@@ -78,8 +98,10 @@ const Login = () => {
                   </form>
 
                   <div className="login_bottom">
-                     <p>Don't have a account ? <Link to={'/register'}>Sign Up</Link> <br /> Or </p>
+                     <p>Don't have a account ? <Link to={'/register'}>Sign Up</Link> </p>
+                     <p>Forget Password? <button className='btn btn-link text-primary pe-auto text-decoration-none' onClick={resetPasswordHandler}>Reset Password</button> <br /> Or </p>
                      <Social></Social>
+                     <ToastContainer></ToastContainer>
                   </div>
                </div>
             </div>

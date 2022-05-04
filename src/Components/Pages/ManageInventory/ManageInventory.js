@@ -7,12 +7,13 @@ import ProductTable from '../../Shared/ProductTable/ProductTable';
 import './ManageInventory.css';
 
 const ManageInventory = () => {
+   document.title = 'Manage Inventory';
    const [product, setProduct] = useState([]);
    const [msg, setMsg] = useState('');
    const navigate = useNavigate();
 
    useEffect(() => {
-      fetch('http://localhost:5000/product')
+      fetch('http://localhost:5000/inventory')
          .then(res => res.json())
          .then(data => setProduct(data));
    }, [product]);

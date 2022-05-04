@@ -2,7 +2,7 @@ export const deleteProductHandler = async (id) => {
    const confirmDelete = window.confirm("Are you want to delete this item ?");
    let msg;
    if (confirmDelete) {
-      const response = await fetch(`http://localhost:5000/product/${id}`, {
+      const response = await fetch(`http://localhost:5000/inventory/${id}`, {
          method: "DELETE"
       });
 

@@ -6,13 +6,14 @@ import { deleteProductHandler } from '../../Shared/ManageProduct/ManageProduct';
 import ProductTable from '../../Shared/ProductTable/ProductTable';
 
 const MyItem = () => {
+   document.title = "My Inventory Items";
    const [user] = useAuthState(auth);
    const [msg, setMsg] = useState('');
    const [product, setProduct] = useState([]);
    const navigate = useNavigate();
 
    useEffect(() => {
-      const url = `http://localhost:5000/my-product/${user.email}`;
+      const url = `http://localhost:5000/my-inventory/${user.email}`;
       fetch(url)
          .then(res => res.json())
          .then(data => setProduct(data));

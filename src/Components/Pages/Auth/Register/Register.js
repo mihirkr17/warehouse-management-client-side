@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
 import Social from '../Social/Social';
 import SpinnerBtn from '../../../Shared/SpinnerBtn';
+import { sendEmailVerification } from 'firebase/auth';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
+   document.title = "EC-House Register";
+   const [msg, setMsg] = useState('');
    // navigate
    const navigate = useNavigate();
 
@@ -15,14 +20,14 @@ const Register = () => {
       user,
       loading,
       error,
-   ] = useCreateUserWithEmailAndPassword(auth);
+   ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
    // updating or setting user profile username
    const [updateProfileData, updateErrMsg] = useUpdateProfile(auth);
 
    // if register successful then redirect to login page
    if (user) {
-      navigate('/login');
+      navigate('/');
    }
 
    // if something wrong error 
@@ -37,10 +42,19 @@ const Register = () => {
       const username = e.target.username.value;
       const email = e.target.email.value;
       const password = e.target.password.value;
-
-      await createUserWithEmailAndPassword(email, password);
-      await updateProfileData({ displayName: username });
+      if (username === '' || email === '' || password === '') {
+         setMsg(<p className='text-center text-danger py-4'>Fill out all input field!</p>);
+      } else {
+         await createUserWithEmailAndPassword(email, password);
+         await updateProfileData({ displayName: username });
+      }
    }
+
+   useEffect(() => {
+      setTimeout(() => {
+         setMsg('');
+      }, 5000);
+   }, [msg]);
 
    return (
       <section className='register__section'>
@@ -70,7 +84,7 @@ const Register = () => {
                      </div>
 
                      <div className="col-lg-7 mx-auto">
-                        {err}
+                        {err || msg}
                      </div>
 
                      <div className="col-lg-7 mx-auto text-center">
@@ -83,6 +97,7 @@ const Register = () => {
                   <div className="register_bottom">
                      <p>Already Logged In ? <Link to={'/login'}>Go To Login</Link> <br /> Or </p>
                      <Social></Social>
+                     <ToastContainer></ToastContainer>
                   </div>
                </div>
             </div>

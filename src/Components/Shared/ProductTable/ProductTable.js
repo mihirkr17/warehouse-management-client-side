@@ -24,7 +24,7 @@ const ProductTable = ({ product, deleteProductHandle, viewProductHandle }) => {
             </thead>
             <tbody>
                {
-                  product ? product.map(items => {
+                  product.length > 0 ? product.map(items => {
                      const { _id, name, price, brand, category, quantity, stock, sup_name } = items;
 
                      return (
@@ -47,9 +47,8 @@ const ProductTable = ({ product, deleteProductHandle, viewProductHandle }) => {
                            </td>
                         </tr>
                      )
-                  }) : ''
+                  }) : <tr><th>No items available</th></tr>
                }
-
             </tbody>
          </table>
       </div>

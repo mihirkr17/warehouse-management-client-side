@@ -36,6 +36,7 @@ const Footer = () => {
                      <NavLink to={'/blogs'}>Blogs</NavLink>
                      {
                         user ? <>
+                           <NavLink to={'/inventory'}>Manage Item</NavLink>
                            <NavLink to={'/add-item'}>Add Item</NavLink>
                            <NavLink to={'/my-item'}>My Items</NavLink>
                         </> : ''

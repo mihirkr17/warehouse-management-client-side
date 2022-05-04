@@ -7,6 +7,7 @@ import SpinnerBtn from '../../Shared/SpinnerBtn';
 
 
 const AddItem = () => {
+   document.title = "Add Item To Inventory";
    const [user] = useAuthState(auth);
    const [msg, setMsg] = useState('');
    const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ const AddItem = () => {
          }
          const allData = { name, img, price, quantity, brand, category, description, sup_name, sup_email, stock };
 
-         const response = await fetch('http://localhost:5000/product', {
+         const response = await fetch('http://localhost:5000/inventory', {
             method: "POST",
             headers: {
                'content-type': 'application/json'

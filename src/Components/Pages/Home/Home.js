@@ -5,6 +5,7 @@ import './Home.css';
 import Inventories from './Inventories/Inventories';
 
 const Home = () => {
+   document.title = "EC-House Home";
    return (
       <section className='home__section py-3'>
          <Banner></Banner>
