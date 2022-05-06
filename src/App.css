@@ -43,22 +43,44 @@ body {
 }
 
 .section_title {
-  text-align: center;
   padding: 10px 0;
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: bold;
   position: relative;
   color: var(--color-trans);
   letter-spacing: 1.2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .section_title span {
   letter-spacing: 1px;
-  position: absolute;
-  top: 98%;
-  left: 50%;
-  font-size: 2rem;
+  font-size: 1.1rem;
   color: var(--color-primary);
+  width: 100%;
+}
+
+.section_title::before,
+.section_title::after {
+  content: "";
+  height: 4px;
+  width: 15%;
+  background-color: var(--color-trans);
+  position: absolute;
+}
+
+.section_title::before {
+  top: 50%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+
+.section_title::after {
+  top: 50%;
+  left: 90%;
   transform: translate(-50%, -50%);
 }
 

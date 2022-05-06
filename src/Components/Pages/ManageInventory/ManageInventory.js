@@ -39,11 +39,6 @@ const ManageInventory = () => {
          {msg}
          <div className="container py-5">
             <div className="manage_inventory_header">
-               <h6>
-                  {
-                     product.length <= 0 ? "No product Found" : product.length === 1 ? "Total " + product.length + " Product available" : "Total " + product.length + " Products available"
-                  }
-               </h6>
                <NavLink className='bt9 bt9_add' to={'/add-item'}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add Item</NavLink>
             </div>
             <ProductTable

@@ -10,6 +10,10 @@
    transition: all 0.4s linear;
 }
 
+.brand_card img {
+   width: 110px;
+}
+
 .brand_card:hover {
    background-color: var(--color-light);
 }
@@ -17,5 +21,9 @@
 @media (max-width: 567px) {
    .brand_card {
       height: 120px;
+   }
+
+   .brand_card img {
+      width: 100px;
    }
 }

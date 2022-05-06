@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
    document.title = "EC-House Login";
+   const [validUser, setValidUser] = useState('');
    const [email, setEmail] = useState('');
    const location = useLocation();
    const navigate = useNavigate();
@@ -29,10 +30,10 @@ const Login = () => {
 
    // if logged in then redirect to home page 
    useEffect(() => {
-      if (user) {
+      if (user && validUser.length > 0) {
          navigate(comingFrom, { replace: true });
       }
-   }, [comingFrom, navigate, user]);
+   }, [comingFrom, navigate, user, validUser]);
 
    // if error
    let errors;
@@ -51,7 +52,21 @@ const Login = () => {
       e.preventDefault();
       const email = e.target.email.value;
       const password = e.target.password.value;
-      signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(email, password);
+
+      const url = 'http://localhost:5000/login';
+      const response = await fetch(url, {
+         method: "POST",
+         headers: {
+            'content-type': 'application/json'
+         },
+         body: JSON.stringify({ email })
+      });
+
+      const token = await response.json();
+      localStorage.setItem('accessToken', token.accessToken);
+      const getToken = localStorage.getItem('accessToken');
+      setValidUser(getToken);
    }
 
    const resetPasswordHandler = async () => {

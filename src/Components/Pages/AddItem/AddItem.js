@@ -112,6 +112,7 @@ const AddItem = () => {
                      <select id="productCategory" name='productCategory' className="form-select">
                         <option value=''>Choose Category</option>
                         <option value={'mobile'}>mobile</option>
+                        <option value="tablet">tablet</option>
                         <option value={'laptop'}>laptop</option>
                         <option value={'monitor'}>monitor</option>
                         <option value={'pc-accessories'}>pc-accessories</option>

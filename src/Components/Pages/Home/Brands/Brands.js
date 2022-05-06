@@ -13,37 +13,37 @@ const Brands = () => {
       <section className='brands__section section_style'>
          <h2 className="section_title">Our Popular <span>Brands</span></h2>
          <div className="row mt-5">
-            <div className="col-lg-3">
+            <div className="col-lg-2">
                <div className="brand_card">
                   <img src={hp} alt="hp-brand" />
                </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-2">
                <div className="brand_card">
                <img src={lg} alt="lg-brand" />
                </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-2">
                <div className="brand_card">
                   <img src={lenovo} alt="lenovo-brand" />
                </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-2">
                <div className="brand_card">
                   <img src={acer} alt="acer-brand" />
                </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-2">
                <div className="brand_card">
                   <img src={microsoft} alt="microsoft-brand" />
                </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-2">
                <div className="brand_card">
                   <img src={toshiba} alt="toshiba-brand" />
                </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-2">
                <div className="brand_card">
                   <img src={samsung} alt="samsung-brand" />
                </div>

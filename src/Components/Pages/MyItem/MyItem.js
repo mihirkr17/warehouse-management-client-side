@@ -1,3 +1,4 @@
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
@@ -13,16 +14,31 @@ const MyItem = () => {
    const navigate = useNavigate();
 
    useEffect(() => {
-      const url = `http://localhost:5000/my-inventory/${user.email}`;
-      fetch(url)
-         .then(res => res.json())
-         .then(data => setProduct(data));
-   }, [user.email, product]);
+      const url = `http://localhost:5000/my-inventory?email=${user.email}`;
+
+      const myItems = async () => {
+         const response = await fetch(url, {
+            headers: {
+               'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+         })
+         if (response.status === 403 || response.status === 401) {
+            signOut(auth);
+            navigate('/login');
+         } else {
+            const data = await response.json();
+            setProduct(data);
+         }
+      }
+      myItems();
+   }, [navigate, user.email, product]);
 
    const deleteProductHandle = async (id) => {
       const mm = await deleteProductHandler(id);
       setMsg(mm);
    }
+
+
 
    const viewProductHandle = (id) => {
       navigate('/inventory/' + id);
@@ -38,12 +54,6 @@ const MyItem = () => {
       <div className='my_item__section' style={{ minHeight: "90vh" }}>
          <h2 className="section_title">My All <span>Products</span></h2>
          <div className="container py-5">
-            <h6>
-               {
-                  product.length <= 0 ? "No product Found" : product.length === 1 ? "Total " + product.length + " Product available" : "Total " + product.length + " Products available"
-               }
-            </h6>
-            <br />
             {msg}
             <ProductTable
                viewProductHandle={viewProductHandle}

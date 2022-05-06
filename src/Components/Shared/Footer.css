@@ -1,6 +1,14 @@
+.footer_svg {
+   width: 100%;
+   border-bottom: 1px solid var(--color-dark);
+}
+
+.footer_svg path {
+   fill: var(--color-dark);
+}
+
 .footer__section {
    background-color: var(--color-dark);
-   border-top: 20px solid var(--color-sweet);
    border-bottom: 5px solid var(--color-sweet);
 }
 
