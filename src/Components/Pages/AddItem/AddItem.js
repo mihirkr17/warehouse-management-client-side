@@ -2,9 +2,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { insertProduct } from '../../../Api/Api';
 import auth from '../../../firebase.init';
-import SpinnerBtn from '../../Shared/SpinnerBtn';
 
+import SpinnerBtn from '../../Shared/SpinnerBtn';
 
 const AddItem = () => {
    document.title = "Add Item To Inventory";
@@ -24,7 +25,7 @@ const AddItem = () => {
       const quantity = parseInt(e.target.productQuantity.value);
       const description = e.target.productDescription.value;
       const sup_name = e.target.productSupplier.value;
-      const sup_email = user.email;
+      const userEmail = user.email;
       const category = e.target.productCategory.value;
 
       if ((name === '') || (img === '') || (price === '') || (brand === '') || (quantity === '') || (description === '') || (category === '')) {
@@ -38,17 +39,8 @@ const AddItem = () => {
          } else {
             stock = quantity === 0 ? 'out' : 'in';
          }
-         const allData = { name, img, price, quantity, brand, category, description, sup_name, sup_email, stock };
-
-         const response = await fetch('http://localhost:5000/inventory', {
-            method: "POST",
-            headers: {
-               'content-type': 'application/json'
-            },
-            body: JSON.stringify(allData)
-         });
-
-         const data = await response.json();
+         const allData = { name, img, price, quantity, brand, category, description, sup_name, userEmail, stock };
+         const data = await insertProduct(allData);
 
          if (data.insertedId) {
             setLoading(false);
@@ -58,6 +50,7 @@ const AddItem = () => {
       }
    }
 
+   // message hiding after 5 second
    useEffect(() => {
       setTimeout(() => {
          setMsg('');

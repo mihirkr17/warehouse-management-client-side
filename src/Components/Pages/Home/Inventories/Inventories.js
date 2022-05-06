@@ -2,6 +2,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { fetchAllProduct } from '../../../../Api/Api';
 import Product from '../../../Shared/Product/Product';
 import Spinner from '../../../Shared/Spinner';
 import './Inventories.css';
@@ -9,14 +10,16 @@ import './Inventories.css';
 const Inventories = () => {
    const [product, setProduct] = useState([]);
    const [loading, setLoading] = useState(false);
+   // fetching all the product
    useEffect(() => {
       setLoading(true);
-      fetch('http://localhost:5000/inventory')
-         .then(res => res.json())
-         .then(data => {
-            setLoading(false);
+      (async () => {
+         const data = await fetchAllProduct();
+         if (data) {
             setProduct(data)
-         });
+            setLoading(false);
+         }
+      })();
    }, []);
 
    return (
@@ -27,7 +30,7 @@ const Inventories = () => {
             {
                loading === true ? <Spinner></Spinner> : product.map((items) => {
                   return (
-                     <div className="col-lg-4 col-md-6" key={items._id}>
+                     <div className="col-lg-4 px-5 col-md-6" key={items._id}>
                         <Product product={items}></Product>
                      </div>
                   )

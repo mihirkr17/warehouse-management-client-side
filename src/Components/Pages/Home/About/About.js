@@ -12,7 +12,7 @@ const About = () => {
                   We are here to store many types of variations of electronics products.
                   We have many products like (Laptop, Mobile, Accessories, Tablet, and Monitor) that we supply.
                   Our sellers are adding good products at an all-time in our inventory because they are always strict about
-                  product quality and make us happy for our clients.
+                  product quality.
                </div>
             </div>
             <div className="col-lg-6 py-4">

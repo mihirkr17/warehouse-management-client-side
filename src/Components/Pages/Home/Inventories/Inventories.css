@@ -1,3 +1,28 @@
+.product_card {
+   transition: all 0.4s linear;
+   position: relative;
+}
+
+.product_card::before {
+   content: "";
+   width: 90%;
+   height: 100px;
+   border: solid 20px #000;
+   border-color: #0000000d transparent transparent transparent;
+   border-radius: 50%/100px 100px 0 0;
+   position: absolute;
+   top: 25%;
+   left: 50%;
+   transform: translate(-50%, -50%) rotate(-20deg);
+}
+
+.product_card:hover .product_card_update_btn {
+   padding: 5px 60px;
+}
+
+.product_card_body h5 {
+   font-size: 1.1rem;
+}
 .product_card_body strong,
 .product_card_body span {
    font-size: 0.8rem;

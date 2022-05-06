@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-:root {
+html {
   /* Color variation */
   --color-body: #f9fff482;
   --color-light: #f1f1f1;
@@ -27,14 +27,18 @@
   --color-red-alt: darkred;
   --color-trans: #15171a24;
   --color-gray: gray;
+  --color-text-primary: hsl(0, 0%, 8%);
+  --color-text-secondary: hsl(0, 0%, 20%);
 
   /* Font variation */
   --font-primary: "Poppins", sans-serif;
+  --font-secondary: 'Oleo Script Swash Caps', cursive;
 }
 
 body {
   background-color: var(--color-body);
   font-family: var(--font-primary);
+  color: var(--color-text-primary);
 }
 
 /* Re-usable class list */
@@ -102,6 +106,8 @@ body {
   transition: all 0.4s ease-in-out;
   text-decoration: none;
   border: none;
+  display: inline-block;
+  text-align: center;
 }
 
 /* Update btn style */
@@ -177,4 +183,8 @@ a,
 p {
   font-size: 0.9rem;
   margin: 0;
+}
+
+section {
+  min-height: 90vh;
 }

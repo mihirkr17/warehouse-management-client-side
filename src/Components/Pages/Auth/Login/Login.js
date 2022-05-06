@@ -7,12 +7,14 @@ import Social from '../Social/Social';
 import SpinnerBtn from '../../../Shared/SpinnerBtn';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import loginImg from '../../../../Assets/images/login.png';
 
 
 const Login = () => {
    document.title = "EC-House Login";
    const [validUser, setValidUser] = useState('');
    const [email, setEmail] = useState('');
+   const [msg, setMsg] = useState('');
    const location = useLocation();
    const navigate = useNavigate();
    let comingFrom = location.state?.from?.pathname || '/';
@@ -52,23 +54,30 @@ const Login = () => {
       e.preventDefault();
       const email = e.target.email.value;
       const password = e.target.password.value;
-      await signInWithEmailAndPassword(email, password);
 
-      const url = 'http://localhost:5000/login';
-      const response = await fetch(url, {
-         method: "POST",
-         headers: {
-            'content-type': 'application/json'
-         },
-         body: JSON.stringify({ email })
-      });
+      if (email !== '' || password !== '') {
+         await signInWithEmailAndPassword(email, password);
 
-      const token = await response.json();
-      localStorage.setItem('accessToken', token.accessToken);
-      const getToken = localStorage.getItem('accessToken');
-      setValidUser(getToken);
+         // adding jwt token in localStorage and sending to server
+         const url = 'http://localhost:5000/login';
+         const response = await fetch(url, {
+            method: "POST",
+            headers: {
+               'content-type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+         });
+
+         const token = await response.json();
+         localStorage.setItem('accessToken', token.accessToken);
+         const getToken = localStorage.getItem('accessToken');
+         setValidUser(getToken);
+      } else {
+         setMsg(<p className='text-danger py-3 text-center'>*** Please fill all input fields!</p>);
+      }
    }
 
+   // Password reset handler 
    const resetPasswordHandler = async () => {
       if (email) {
          await sendPasswordResetEmail(email);
@@ -78,13 +87,19 @@ const Login = () => {
       }
    }
 
+   useEffect(() => {
+      setTimeout(() => {
+         setMsg('');
+      }, 5000)
+   }, [msg]);
+
    return (
       <section className='login__section'>
          <div className="container">
 
             <div className="row py-5">
-               <div className="col-lg-6 login_image">
-
+               <div className="col-lg-6 login_image d-flex align-items-center justify-content-center">
+                  <img src={loginImg} alt="loginImg" style={{ width: "90%" }} />
                </div>
                <div className="col-lg-6 login_form text-center card_main">
                   <h2 className='section_title my-3'>Login to <span>EC-House</span></h2>
@@ -103,7 +118,7 @@ const Login = () => {
                      </div>
 
                      <div className="col-lg-7 mx-auto">
-                        {errors || send}
+                        {errors || send || msg}
                      </div>
                      <div className="col-lg-7 mx-auto text-center">
                         <button type='submit' className='btn btn-primary'>

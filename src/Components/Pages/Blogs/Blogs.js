@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { fetchAllBlogData } from '../../../Api/Api';
 import Spinner from '../../Shared/Spinner';
 
 const Blogs = () => {
@@ -8,12 +9,14 @@ const Blogs = () => {
 
    useEffect(() => {
       setLoading(true);
-      fetch('http://localhost:5000/blog')
-         .then(res => res.json())
-         .then(data => {
+      const getBlogData = async () => {
+         const data = await fetchAllBlogData();
+         if (data) {
             setFaq(data);
             setLoading(false);
-         });
+         }
+      }
+      getBlogData();
    }, []);
 
    let ques = 0;

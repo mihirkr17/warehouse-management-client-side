@@ -2,9 +2,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { deleteProductHandler } from '../../Shared/ManageProduct/ManageProduct';
+import { deleteSingleProductHandler, fetchAllProduct } from '../../../Api/Api';
 import ProductTable from '../../Shared/ProductTable/ProductTable';
 import './ManageInventory.css';
+
 
 const ManageInventory = () => {
    document.title = 'Manage Inventory';
@@ -12,21 +13,30 @@ const ManageInventory = () => {
    const [msg, setMsg] = useState('');
    const navigate = useNavigate();
 
+   // show all product in manage inventory page
    useEffect(() => {
-      fetch('http://localhost:5000/inventory')
-         .then(res => res.json())
-         .then(data => setProduct(data));
+      (async () => {
+         const data = await fetchAllProduct();
+         if (data) {
+            setProduct(data);
+         }
+      })();
    }, [product]);
 
-   const deleteProductHandle = async (id) => {
-      const mm = await deleteProductHandler(id);
-      setMsg(mm);
+   // deleting single product 
+   const deleteProductHandle = async (productId) => {
+      const deleteMsg = await deleteSingleProductHandler(productId);
+      setMsg(deleteMsg);
+      const filterProducts = product.filter(item => item._id !== productId);
+      setProduct(filterProducts);
    }
 
-   const viewProductHandle = (id) => {
-      navigate('/inventory/' + id);
+   // going to product details info page
+   const viewProductHandle = (productId) => {
+      navigate('/inventory/' + productId);
    }
 
+   // all message hiding after 5 second
    useEffect(() => {
       setTimeout(() => {
          setMsg('');

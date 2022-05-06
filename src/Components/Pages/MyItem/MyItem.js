@@ -2,8 +2,8 @@ import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
+import { deleteSingleProductHandler, fetchMyItems } from '../../../Api/Api';
 import auth from '../../../firebase.init';
-import { deleteProductHandler } from '../../Shared/ManageProduct/ManageProduct';
 import ProductTable from '../../Shared/ProductTable/ProductTable';
 
 const MyItem = () => {
@@ -13,37 +13,34 @@ const MyItem = () => {
    const [product, setProduct] = useState([]);
    const navigate = useNavigate();
 
+   // fetching only valid email based users items from database 
    useEffect(() => {
-      const url = `http://localhost:5000/my-inventory?email=${user.email}`;
+      const accessToken = localStorage.getItem('accessToken');
+      (async () => {
+         const data = await fetchMyItems(user.email, accessToken);
 
-      const myItems = async () => {
-         const response = await fetch(url, {
-            headers: {
-               'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-         })
-         if (response.status === 403 || response.status === 401) {
+         if (data === "failed") {
             signOut(auth);
             navigate('/login');
          } else {
-            const data = await response.json();
             setProduct(data);
          }
-      }
-      myItems();
+      })();
    }, [navigate, user.email, product]);
 
-   const deleteProductHandle = async (id) => {
-      const mm = await deleteProductHandler(id);
-      setMsg(mm);
+   // delete product from my-items page
+   const deleteProductHandle = async (productId) => {
+      const deleteMsg = await deleteSingleProductHandler(productId);
+      setMsg(deleteMsg);
+      const filterProducts = product.filter(item => item._id !== productId);
+      setProduct(filterProducts);
    }
-
-
 
    const viewProductHandle = (id) => {
       navigate('/inventory/' + id);
    }
 
+   // hiding message after 5 second
    useEffect(() => {
       setTimeout(() => {
          setMsg('');
@@ -51,7 +48,7 @@ const MyItem = () => {
    }, [msg]);
 
    return (
-      <div className='my_item__section' style={{ minHeight: "90vh" }}>
+      <section className='my_item__section' style={{ minHeight: "90vh" }}>
          <h2 className="section_title">My All <span>Products</span></h2>
          <div className="container py-5">
             {msg}
@@ -61,7 +58,7 @@ const MyItem = () => {
                product={product}>
             </ProductTable>
          </div>
-      </div>
+      </section>
    );
 };
 

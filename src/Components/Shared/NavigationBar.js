@@ -1,19 +1,24 @@
+import { faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { NavLink } from 'react-router-dom';
 import auth from '../../firebase.init';
+import './NavigationBar.css';
+
 
 const NavigationBar = () => {
    const [user] = useAuthState(auth);
-   const logoutHandler = () => {
-      signOut(auth);
+
+   const logoutHandler = async () => {
+      await signOut(auth);
    }
    return (
-      <header>
-         <nav className="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+
+         <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
             <div className="container">
-               <NavLink className="navbar-brand" to="/">EC-House</NavLink>
+               <NavLink className="navbar-brand navBrand" to="/">EC-House</NavLink>
                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                </button>
@@ -42,8 +47,8 @@ const NavigationBar = () => {
                               <li className="nav-item">
                                  <NavLink className='nav-link' to={'/my-item'}>My Items</NavLink>
                               </li>
-                              <li className="nav-item ms-2">
-                                 <button className='bt9 bt9_close' onClick={logoutHandler}>Log Out</button>
+                              <li className="nav-item">
+                                 <button className='bt9 bt9_close' onClick={logoutHandler}> <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon> Logout</button>
                               </li>
                            </>
                      }
@@ -51,7 +56,7 @@ const NavigationBar = () => {
                </div>
             </div>
          </nav>
-      </header>
+
    );
 };
 

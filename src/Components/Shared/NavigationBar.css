@@ -1,0 +1,9 @@
+.navbar {
+   box-shadow: 0 0 16px var(--color-trans);
+   border-bottom: 5px solid var(--color-trans);
+   padding: 1rem 0;
+   background-color: var(--color-body);
+}
+.navBrand {
+   font-family: var(--font-secondary);
+}
