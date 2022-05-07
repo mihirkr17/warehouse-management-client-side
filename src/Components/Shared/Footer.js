@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faTwitter, faInstagram, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { NavLink } from 'react-router-dom';
 import img1 from '../../Assets/images/footer/img-1.png';
 import img2 from '../../Assets/images/footer/img-2.png';
@@ -69,7 +69,7 @@ const Footer = () => {
             <div className="footer_bottom_info d-flex align-items-center justify-content-around">
                <div className="footer_text text-muted">EC-House &copy; {year}</div>
                <div className="social_icon d-flex align-items-center justify-content-around">
-                  <a href="http://" target="_blank" rel="noopener noreferrer">
+                  <a href="https://web.facebook.com/?_rdc=1&_rdr" target="_blank" rel="noopener noreferrer">
                      <FontAwesomeIcon icon={faFacebook} />
                   </a>
                   <a href="http://" target="_blank" rel="noopener noreferrer">
@@ -77,6 +77,9 @@ const Footer = () => {
                   </a>
                   <a href="http://" target="_blank" rel="noopener noreferrer">
                      <FontAwesomeIcon icon={faInstagram} />
+                  </a>
+                  <a href="https://github.com/mroy35034" target="_blank" rel="noopener noreferrer">
+                     <FontAwesomeIcon icon={faGithub} />
                   </a>
                </div>
             </div>

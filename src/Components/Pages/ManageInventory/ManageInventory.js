@@ -49,7 +49,7 @@ const ManageInventory = () => {
          {msg}
          <div className="container py-5">
             <div className="manage_inventory_header">
-               <NavLink className='bt9 bt9_add' to={'/add-item'}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add Item</NavLink>
+               <NavLink className='bt9 bt9_add' to={'/add-item'}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add New Item</NavLink>
             </div>
             <ProductTable
                viewProductHandle={viewProductHandle}

@@ -26,7 +26,7 @@ const Banner = () => {
                               <div className="col-lg-4 carousel_data">
                                  <div className="carousel_data_text">
                                     <h2>Brand New Laptop</h2>
-                                    <p>We are stocking all the type of brand new laptop.</p>
+                                    <p>We are stocking all type of brand new laptop.</p>
                                     <Link to={'/inventory'} className='bt9 bt9_update'>Stock Now</Link>
                                  </div>
                               </div>
