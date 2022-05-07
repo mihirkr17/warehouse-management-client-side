@@ -21,9 +21,9 @@
 }
 
 .product_card_body h5 {
-   font-size: 1.1rem;
+   font-size: 1rem;
 }
-.product_card_body strong,
+.product_card_body i,
 .product_card_body span {
    font-size: 0.8rem;
 }
@@ -36,10 +36,15 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   padding: 0 0 1rem 0;
+   padding: 0 0 3rem 0;
 }
 
 .product_card_img img {
-   width: 160px;
+   width: 170px;
    height: auto;
+}
+
+
+.product_card_description p{
+   font-size: 0.8rem;
 }

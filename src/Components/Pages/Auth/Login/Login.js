@@ -59,7 +59,7 @@ const Login = () => {
          await signInWithEmailAndPassword(email, password);
 
          // adding jwt token in localStorage and sending to server
-         const url = 'http://localhost:5000/login';
+         const url = 'https://frozen-sea-42906.herokuapp.com/login';
          const response = await fetch(url, {
             method: "POST",
             headers: {

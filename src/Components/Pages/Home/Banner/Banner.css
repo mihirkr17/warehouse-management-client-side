@@ -1,4 +1,96 @@
-.carousel_item img {
-   min-height: 70vh;
+.home_banner {
+   padding: 1rem;
+}
+
+.carousel_item {
+   height: 80vh;
+   background-color: var(--color-primary);
+   color: var(--color-light);
+   border-radius: 20px;
+}
+
+.carousel_item .row {
+   height: 100%;
+}
+
+.carousel_data {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+}
+
+.carousel_data img {
+   height: auto;
+   width: 70%;
+}
+
+.carousel_data_text {
    width: 100%;
+   padding: 1rem 3rem;
+}
+
+.carousel_data_text h2 {
+   font-family: var(--font-secondary);
+   padding: 1rem 0;
+   font-weight: bold;
+}
+
+.carousel_data_text a {
+   margin-top: 3rem;
+}
+
+.carousel_data_text p {
+   color: white;
+}
+
+.banner_sidebar {
+   position: relative;
+}
+
+.banner_sidebar_btn {
+   position: absolute;
+   top: 5%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: var(--color-red);
+   padding: 0.3rem 1rem;
+   color: var(--color-light);
+   display: inline-block;
+   border-radius: 50px;
+   transition: all 0.4s linear;
+   z-index: 9;
+}
+
+.banner_sidebar_btn:hover {
+   color: var(--color-red);
+   background-color: var(--color-light);
+}
+
+.banner_sidebar .row {
+   height: 100%;
+}
+
+.bn_img {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: var(--color-primary-alt);
+   padding: 1rem;
+   overflow: hidden;
+   margin: 0.2rem 0;
+   border-radius: 20px;
+}
+
+.bn_img img {
+   width: 80%;
+   height: auto;
+   transform: translateX(140px);
+}
+
+
+.banner_sidebar .row:hover .bn_img img {
+   transform: translateX(0px);
+   transition: all 0.5s linear;
 }

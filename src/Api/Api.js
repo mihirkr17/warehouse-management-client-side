@@ -3,7 +3,7 @@ export const deleteSingleProductHandler = async (productId) => {
    const confirmDelete = window.confirm("Are you want to delete this item ?");
    let msg;
    if (confirmDelete) {
-      const response = await fetch(`http://localhost:5000/product/${productId}`, {
+      const response = await fetch(`https://frozen-sea-42906.herokuapp.com/product/${productId}`, {
          method: "DELETE"
       });
 
@@ -18,7 +18,7 @@ export const deleteSingleProductHandler = async (productId) => {
 
 // update quantity of product
 export const productQuantityUpdater = async (productId, quantity) => {
-   const url = `http://localhost:5000/product?productId=${productId}`;
+   const url = `https://frozen-sea-42906.herokuapp.com/product?productId=${productId}`;
    const response = await fetch(url, {
       method: "PUT",
       headers: {
@@ -33,7 +33,7 @@ export const productQuantityUpdater = async (productId, quantity) => {
 
 // single product information
 export const fetchSingleProductInfo = async (productId) => {
-   const url = `http://localhost:5000/product?productId=${productId}`;
+   const url = `https://frozen-sea-42906.herokuapp.com/product?productId=${productId}`;
    const response = await fetch(url);
    const data = await response.json();
    return data;
@@ -41,14 +41,14 @@ export const fetchSingleProductInfo = async (productId) => {
 
 // fetch all product
 export const fetchAllProduct = async () => {
-   const response = await fetch('http://localhost:5000/inventory');
+   const response = await fetch('https://frozen-sea-42906.herokuapp.com/inventory');
    const data = await response.json();
    return data;
 }
 
 // insert product into database
 export const insertProduct = async (inputValue) => {
-   const response = await fetch('http://localhost:5000/inventory', {
+   const response = await fetch('https://frozen-sea-42906.herokuapp.com/inventory', {
       method: "POST",
       headers: {
          'content-type': 'application/json'
@@ -62,7 +62,7 @@ export const insertProduct = async (inputValue) => {
 
 // fetch all blog data from database
 export const fetchAllBlogData = async () => {
-   const response = await fetch('http://localhost:5000/blog');
+   const response = await fetch('https://frozen-sea-42906.herokuapp.com/blog');
    const data = await response.json();
    return data;
 }
@@ -71,7 +71,7 @@ export const fetchAllBlogData = async () => {
 
 export const fetchMyItems = async (userEmail, token) => {
    let result;
-   const url = `http://localhost:5000/my-inventory?email=${userEmail}`;
+   const url = `https://frozen-sea-42906.herokuapp.com/my-inventory?email=${userEmail}`;
    const response = await fetch(url, {
       headers: {
          'authorization': `Bearer ${token}`

@@ -18,12 +18,15 @@ const Product = ({ product }) => {
             <img src={img} alt="" />
          </div>
          <article className="product_card_body">
-            <h5>{name.length >= 40 ? name.slice(0, 40) + "..." : name}</h5>
+            <h5>{name.length >= 30 ? name.slice(0, 30) + "..." : name}</h5>
             <div className="product_card_features">
-               <strong>Price : ${price}</strong> <br />
-               <strong>Quantity : {quantity}</strong> <br />
-               <strong>Sold : {stock === 'in' ? <span className='badge bg-success'>{stock}</span> : <span className='bg-danger badge'>{stock}</span>}</strong> <br />
-               <strong>Supplier Name : {sup_name}</strong> <br />
+               <div className="row g-2">
+                  <i className='col-4'>Price : ${price}</i>
+                  <i className='col-4'>Qty : {quantity}</i>
+                  <i className='col-4'>Sold : {stock === 'in' ? <span className='badge bg-success'>{stock}</span> : <span className='bg-danger badge'>{stock}</span>}</i>
+                  <i className='col-12'>Supplier Name : {sup_name}</i>
+               </div>
+
             </div>
             <div className="product_card_description">
 
