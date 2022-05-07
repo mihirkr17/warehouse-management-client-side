@@ -4,13 +4,13 @@ import google from '../../../../Assets/images/logos/google.png';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Spinner from '../../../Shared/Spinner';
 import SpinnerBtn from '../../../Shared/SpinnerBtn';
+import { useToken } from '../../../../Hooks/useToken';
 
 const Social = () => {
    // social login google
    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-
+   const [token] = useToken(user);
    const navigate = useNavigate();
    const location = useLocation();
 
@@ -22,14 +22,15 @@ const Social = () => {
    };
 
    useEffect(() => {
-      if (user) {
+      if (token) {
          navigate(from, { replace: true });
       }
-   }, [from, navigate, user])
+   }, [from, navigate, token])
 
    const socialLoginHandler = async () => {
       await signInWithGoogle();
    }
+
    return (
       <div className='third_party_auth'>
          <div className="auth_response">

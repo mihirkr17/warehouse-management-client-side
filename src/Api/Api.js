@@ -68,7 +68,6 @@ export const fetchAllBlogData = async () => {
 }
 
 // fetch user specific product in my-items page
-
 export const fetchMyItems = async (userEmail, token) => {
    let result;
    const url = `https://frozen-sea-42906.herokuapp.com/my-inventory?email=${userEmail}`;

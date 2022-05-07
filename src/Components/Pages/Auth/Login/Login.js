@@ -8,15 +8,17 @@ import SpinnerBtn from '../../../Shared/SpinnerBtn';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import loginImg from '../../../../Assets/images/login.png';
+import { useToken } from '../../../../Hooks/useToken';
 
 
 const Login = () => {
    document.title = "EC-House Login";
-   const [validUser, setValidUser] = useState('');
+   // const [validUser, setValidUser] = useState('');
    const [email, setEmail] = useState('');
    const [msg, setMsg] = useState('');
    const location = useLocation();
    const navigate = useNavigate();
+
    let comingFrom = location.state?.from?.pathname || '/';
 
    // login with email password
@@ -26,16 +28,17 @@ const Login = () => {
       loading,
       error,
    ] = useSignInWithEmailAndPassword(auth);
+   const [token] = useToken(user);
 
    // use password reset with email
    const [sendPasswordResetEmail, sending, pwdError] = useSendPasswordResetEmail(auth);
 
    // if logged in then redirect to home page 
    useEffect(() => {
-      if (user && validUser.length > 0) {
+      if (token) {
          navigate(comingFrom, { replace: true });
       }
-   }, [comingFrom, navigate, user, validUser]);
+   }, [comingFrom, navigate, token]);
 
    // if error
    let errors;
@@ -57,21 +60,6 @@ const Login = () => {
 
       if (email !== '' || password !== '') {
          await signInWithEmailAndPassword(email, password);
-
-         // adding jwt token in localStorage and sending to server
-         const url = 'https://frozen-sea-42906.herokuapp.com/login';
-         const response = await fetch(url, {
-            method: "POST",
-            headers: {
-               'content-type': 'application/json'
-            },
-            body: JSON.stringify({ email })
-         });
-
-         const token = await response.json();
-         localStorage.setItem('accessToken', token.accessToken);
-         const getToken = localStorage.getItem('accessToken');
-         setValidUser(getToken);
       } else {
          setMsg(<p className='text-danger py-3 text-center'>*** Please fill all input fields!</p>);
       }
