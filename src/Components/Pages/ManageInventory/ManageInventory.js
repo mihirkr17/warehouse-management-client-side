@@ -1,47 +1,36 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { deleteSingleProductHandler, fetchAllProduct } from '../../../Api/Api';
+import { useAction, useFetch, useMessage } from '../../../Hooks/Hooks';
 import ProductTable from '../../Shared/ProductTable/ProductTable';
 import './ManageInventory.css';
 
 
 const ManageInventory = () => {
    document.title = 'Manage Inventory';
-   const [product, setProduct] = useState([]);
-   const [msg, setMsg] = useState('');
    const navigate = useNavigate();
-
-   // show all product in manage inventory page
-   useEffect(() => {
-      (async () => {
-         const data = await fetchAllProduct();
-         if (data) {
-            setProduct(data);
-         }
-      })();
-   }, [product]);
+   const [isLoad, setIsLoad] = useState(false);
+   const { fetchData, fetchLoading } = useFetch('https://frozen-sea-42906.herokuapp.com/inventory', isLoad);
+   const { msg, setMessage } = useMessage();
+   const { setAction } = useAction();
 
    // deleting single product 
    const deleteProductHandle = async (productId) => {
-      const deleteMsg = await deleteSingleProductHandler(productId);
-      setMsg(deleteMsg);
-      const filterProducts = product.filter(item => item._id !== productId);
-      setProduct(filterProducts);
+      const confirmDelete = window.confirm("Are you want to delete this item ?");
+      if (confirmDelete) {
+         const deleteMsg = await setAction(`https://frozen-sea-42906.herokuapp.com/product/${productId}`, "DELETE");
+         setIsLoad(load => !load);
+         if (deleteMsg.deletedCount === 1) {
+            setMessage(<p className='text-success py-4 text-center'>Item successfully removed</p>);
+         }
+      }
    }
 
    // going to product details info page
    const viewProductHandle = (productId) => {
       navigate('/inventory/' + productId);
    }
-
-   // all message hiding after 5 second
-   useEffect(() => {
-      setTimeout(() => {
-         setMsg('');
-      }, 5000);
-   }, [msg]);
 
    return (
       <div className='manage_inventory__section' style={{ minHeight: "90vh" }}>
@@ -51,11 +40,15 @@ const ManageInventory = () => {
             <div className="manage_inventory_header">
                <NavLink className='bt9 bt9_add' to={'/add-item'}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add New Item</NavLink>
             </div>
+
             <ProductTable
                viewProductHandle={viewProductHandle}
                deleteProductHandle={deleteProductHandle}
-               product={product}>
+               product={fetchData}
+               fetchLoad={fetchLoading}>
             </ProductTable>
+
+
          </div>
       </div>
    );

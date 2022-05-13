@@ -1,51 +1,36 @@
-import { signOut } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
-import { deleteSingleProductHandler, fetchMyItems } from '../../../Api/Api';
 import auth from '../../../firebase.init';
+import { useAction, useFetch, useMessage } from '../../../Hooks/Hooks';
 import ProductTable from '../../Shared/ProductTable/ProductTable';
 
 const MyItem = () => {
    document.title = "My Inventory Items";
    const [user] = useAuthState(auth);
-   const [msg, setMsg] = useState('');
-   const [product, setProduct] = useState([]);
    const navigate = useNavigate();
+   const [isLoad, setIsLoad] = useState(false);
+   const { msg, setMessage } = useMessage();
+   const { setAction } = useAction();
 
-   // fetching only valid email based users items from database 
-   useEffect(() => {
-      const accessToken = localStorage.getItem('accessToken');
-      (async () => {
-         const data = await fetchMyItems(user.email, accessToken);
+   const accessToken = localStorage.getItem('accessToken');
+   const { fetchData, fetchLoading } = useFetch(`https://frozen-sea-42906.herokuapp.com/my-inventory?email=${user.email}`, isLoad, accessToken);
 
-         if (data === "failed") {
-            signOut(auth);
-            navigate('/login');
-         } else {
-            setProduct(data);
-         }
-      })();
-   }, [navigate, user.email, product]);
-
-   // delete product from my-items page
+   // deleting single product 
    const deleteProductHandle = async (productId) => {
-      const deleteMsg = await deleteSingleProductHandler(productId);
-      setMsg(deleteMsg);
-      const filterProducts = product.filter(item => item._id !== productId);
-      setProduct(filterProducts);
+      const confirmDelete = window.confirm("Are you want to delete this item ?");
+      if (confirmDelete) {
+         const deleteMsg = await setAction(`https://frozen-sea-42906.herokuapp.com/product/${productId}`, "DELETE");
+         setIsLoad(load => !load);
+         if (deleteMsg.deletedCount === 1) {
+            setMessage(<p className='text-success py-4 text-center'>Item successfully removed</p>);
+         }
+      }
    }
 
    const viewProductHandle = (id) => {
       navigate('/inventory/' + id);
    }
-
-   // hiding message after 5 second
-   useEffect(() => {
-      setTimeout(() => {
-         setMsg('');
-      }, 5000);
-   }, [msg]);
 
    return (
       <section className='my_item__section' style={{ minHeight: "90vh" }}>
@@ -55,7 +40,8 @@ const MyItem = () => {
             <ProductTable
                viewProductHandle={viewProductHandle}
                deleteProductHandle={deleteProductHandle}
-               product={product}>
+               product={fetchData}
+               fetchLoad={fetchLoading}>
             </ProductTable>
          </div>
       </section>

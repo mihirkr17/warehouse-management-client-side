@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { fetchAllBlogData } from '../../../Api/Api';
+import React from 'react';
 import Spinner from '../../Shared/Spinner';
+import { useFetch } from '../../../Hooks/Hooks';
 
 const Blogs = () => {
    document.title = "EC-House Blog";
-   const [faq, setFaq] = useState([]);
-   const [loading, setLoading] = useState(false);
-
-   useEffect(() => {
-      setLoading(true);
-      const getBlogData = async () => {
-         const data = await fetchAllBlogData();
-         if (data) {
-            setFaq(data);
-            setLoading(false);
-         }
-      }
-      getBlogData();
-   }, []);
+   const url = 'https://frozen-sea-42906.herokuapp.com/blog';
+   const { fetchData, fetchLoading } = useFetch(url);
 
    let ques = 0;
 
@@ -28,7 +16,7 @@ const Blogs = () => {
 
             <div className="row">
                {
-                  loading === false ? faq.map(items => {
+                  fetchData.length > 0 ? fetchData.map(items => {
                      const { question, answer, _id } = items;
                      return (
                         <div className="col-lg-8 mx-auto card_main mb-4" key={_id}>
@@ -38,7 +26,7 @@ const Blogs = () => {
                            </article>
                         </div>
                      )
-                  }) : <Spinner></Spinner>
+                  }) : fetchLoading ? <Spinner></Spinner> : ''
                }
             </div>
          </div>

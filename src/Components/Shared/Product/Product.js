@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Product = ({ product }) => {
    const [more, setMore] = useState(null);
-   const { _id, name, img, price, quantity, description, stock, sup_name } = product;
+   const { _id, name, img, price, quantity, description, stock, sup_name } = product ? product : {};
 
    const seeMoreHandler = (id) => {
       if (more === id) {

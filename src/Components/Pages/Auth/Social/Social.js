@@ -5,7 +5,7 @@ import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SpinnerBtn from '../../../Shared/SpinnerBtn';
-import { useToken } from '../../../../Hooks/useToken';
+import { useToken } from '../../../../Hooks/Hooks';
 
 const Social = () => {
    // social login google

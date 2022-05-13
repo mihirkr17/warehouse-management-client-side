@@ -8,7 +8,7 @@ import SpinnerBtn from '../../../Shared/SpinnerBtn';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import loginImg from '../../../../Assets/images/login.png';
-import { useToken } from '../../../../Hooks/useToken';
+import { useToken } from '../../../../Hooks/Hooks';
 
 
 const Login = () => {

@@ -1,17 +1,18 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { insertProduct } from '../../../Api/Api';
 import auth from '../../../firebase.init';
+import { useAction, useMessage } from '../../../Hooks/Hooks';
 
 import SpinnerBtn from '../../Shared/SpinnerBtn';
 
 const AddItem = () => {
    document.title = "Add Item To Inventory";
    const [user] = useAuthState(auth);
-   const [msg, setMsg] = useState('');
+   const { msg, setMessage } = useMessage();
    const [loading, setLoading] = useState(false);
+   const { setAction } = useAction();
 
    // add product handler form
    const addProductHandler = async (e) => {
@@ -29,33 +30,26 @@ const AddItem = () => {
       const category = e.target.productCategory.value;
 
       if ((name === '') || (img === '') || (price === '') || (brand === '') || (quantity === '') || (description === '') || (category === '')) {
-         setMsg(<p className='text-danger text-center py-3'>Please fill all input field!</p>);
+         setMessage(<p className='text-danger text-center py-3'>Please fill all input field!</p>);
          setLoading(false);
       } else {
          setLoading(true);
          if (quantity < 0) {
-            setMsg(<p className='text-danger text-center py-3'>Product quantity value wrong</p>);
+            setMessage(<p className='text-danger text-center py-3'>Product quantity value wrong</p>);
             return;
          } else {
             stock = quantity === 0 ? 'out' : 'in';
          }
          const allData = { name, img, price, quantity, brand, category, description, sup_name, userEmail, stock };
-         const data = await insertProduct(allData);
 
+         const data = await setAction('https://frozen-sea-42906.herokuapp.com/inventory', "POST", JSON.stringify(allData), 'application/json');
          if (data.insertedId) {
             setLoading(false);
             e.target.reset();
-            setMsg(<p className='text-success text-center py-3'>Your product added successfully</p>);
+            setMessage(<p className='text-success text-center py-3'>Your product added successfully</p>);
          }
       }
    }
-
-   // message hiding after 5 second
-   useEffect(() => {
-      setTimeout(() => {
-         setMsg('');
-      }, 5000);
-   }, [msg]);
 
    return (
       <section className='add_item__section py-4' style={{ minHeight: "90vh" }}>
