@@ -13,7 +13,7 @@ const Inventories = () => {
 
    return (
       <section className='inventories__section section_style'>
-         <h2 className='section_title'>Our Inventories <span>Products</span></h2>
+         <h2 className='section_title'>Our Inventory <span>Products</span></h2>
 
          <div className="row my-5 ">
             {
