@@ -21,7 +21,7 @@ const ProductDetail = () => {
    const [deliverBtnLoad, setDeliverBtnLoad] = useState(false);
    const { msg, setMessage } = useMessage();
    const navigate = useNavigate();
-   const { setAction } = useAction()
+   const { setAction } = useAction();
 
    // if product quantity out of stock then delivered button will disabled
    useEffect(() => {

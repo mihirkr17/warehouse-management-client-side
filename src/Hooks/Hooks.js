@@ -10,22 +10,23 @@ export const useFetch = (url, dep = undefined, token = undefined) => {
    const navigate = useNavigate();
 
    useEffect(() => {
-      let mounted = true;
+      let controller = new AbortController();
+      const signal = controller.signal;
       (async () => {
          try {
             setFetchLoading(true);
-            const response = await fetch(url || url, {
+            const response = await fetch(url, { signal } || url, {
                headers: {
                   'authorization': `Bearer ${token}`
-               }
+               },
+               signal: signal
             });
 
             if (response.status === 403 || response.status === 401) {
                navigate('/login');
                signOut(auth);
             } else {
-               const resData = await response.json();
-               if (mounted) setFetchData(resData);
+               setFetchData(await response.json());
             }
          } catch (error) {
             setFetchErr(error);
@@ -35,7 +36,7 @@ export const useFetch = (url, dep = undefined, token = undefined) => {
       })();
 
       return () => {
-         mounted = false;
+         controller?.abort();
       }
    }, [url, dep, token, navigate]);
 
